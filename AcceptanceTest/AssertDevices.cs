@@ -42,26 +42,22 @@ namespace AgGateway.ADAPT.AcceptanceTest
 
             Assert.AreEqual(expectedOriginAxleLocationEnum, machineConfiguration.OriginAxleLocation);
 
-            var gpsReceiverXOffset = RepresentationInstanceList.vrGPSToNonSteeringAxleOffset.DomainId;
-            if (expectedOffsets.ContainsKey(gpsReceiverXOffset))
+            var gpsReceiverXOffsetDomainId = RepresentationInstanceList.vrGPSToNonSteeringAxleOffset.DomainId;
+            if (expectedOffsets.ContainsKey(gpsReceiverXOffsetDomainId))
             {
-                var expectedOffset = expectedOffsets[gpsReceiverXOffset];
+                var expectedOffset = expectedOffsets[gpsReceiverXOffsetDomainId];
                 var actualOffset = machineConfiguration.GpsReceiverXOffset;
 
-                Assert.AreEqual(expectedOffset.Item1, actualOffset.Value.Value);
-                Assert.AreEqual(expectedOffset.Item2, actualOffset.Value.UnitOfMeasure.Code);
-                Assert.AreEqual(gpsReceiverXOffset, actualOffset.Representation.Code);
+                AssertValue.VerifyNumericRepresentationValue(expectedOffset.Item1, expectedOffset.Item2, gpsReceiverXOffsetDomainId, actualOffset);
             }
 
-            var gpsReceiverYOffset = RepresentationInstanceList.vrReceiverOffset.DomainId;
-            if (expectedOffsets.ContainsKey(gpsReceiverYOffset))
+            var gpsReceiverYOffsetDomainId = RepresentationInstanceList.vrReceiverOffset.DomainId;
+            if (expectedOffsets.ContainsKey(gpsReceiverYOffsetDomainId))
             {
-                var expectedOffset = expectedOffsets[gpsReceiverYOffset];
+                var expectedOffset = expectedOffsets[gpsReceiverYOffsetDomainId];
                 var actualOffset = machineConfiguration.GpsReceiverYOffset;
 
-                Assert.AreEqual(expectedOffset.Item1, actualOffset.Value.Value);
-                Assert.AreEqual(expectedOffset.Item2, actualOffset.Value.UnitOfMeasure.Code);
-                Assert.AreEqual(gpsReceiverYOffset, actualOffset.Representation.Code);
+                AssertValue.VerifyNumericRepresentationValue(expectedOffset.Item1, expectedOffset.Item2, gpsReceiverYOffsetDomainId, actualOffset);
             }
         }
 
@@ -82,9 +78,7 @@ namespace AgGateway.ADAPT.AcceptanceTest
                 var expectedWidth = expectedOffsets[equipmentWidthDomainId];
                 var actualWidth = implementConfiguration.Width;
 
-                Assert.AreEqual(expectedWidth.Item1, actualWidth.Value.Value);
-                Assert.AreEqual(expectedWidth.Item2, actualWidth.Value.UnitOfMeasure.Code);
-                Assert.AreEqual(equipmentWidthDomainId, actualWidth.Representation.Code);
+                AssertValue.VerifyNumericRepresentationValue(expectedWidth.Item1, expectedWidth.Item2, equipmentWidthDomainId, actualWidth);
             }
 
             var trackSpacingDomainId = RepresentationInstanceList.vrTrackSpacing.DomainId;
@@ -93,9 +87,7 @@ namespace AgGateway.ADAPT.AcceptanceTest
                 var expectedTrackSpacing = expectedOffsets[trackSpacingDomainId];
                 var actualTrackSpacing = implementConfiguration.TrackSpacing;
 
-                Assert.AreEqual(expectedTrackSpacing.Item1, actualTrackSpacing.Value.Value);
-                Assert.AreEqual(expectedTrackSpacing.Item2, actualTrackSpacing.Value.UnitOfMeasure.Code);
-                Assert.AreEqual(trackSpacingDomainId, actualTrackSpacing.Representation.Code);
+                AssertValue.VerifyNumericRepresentationValue(expectedTrackSpacing.Item1, expectedTrackSpacing.Item2, trackSpacingDomainId, actualTrackSpacing);
             }
 
             var physicalImplementWidthDomainId = RepresentationInstanceList.vrPhysicalImplementWidth.DomainId;
@@ -104,9 +96,7 @@ namespace AgGateway.ADAPT.AcceptanceTest
                 var expectedPhysialWidth = expectedOffsets[physicalImplementWidthDomainId];
                 var actualPhysicalWidth = implementConfiguration.PhysicalWidth;
 
-                Assert.AreEqual(expectedPhysialWidth.Item1, actualPhysicalWidth.Value.Value);
-                Assert.AreEqual(expectedPhysialWidth.Item2, actualPhysicalWidth.Value.UnitOfMeasure.Code);
-                Assert.AreEqual(physicalImplementWidthDomainId, actualPhysicalWidth.Representation.Code);
+                AssertValue.VerifyNumericRepresentationValue(expectedPhysialWidth.Item1, expectedPhysialWidth.Item2, physicalImplementWidthDomainId, actualPhysicalWidth);
             }
 
             var implementLengthDomainId = RepresentationInstanceList.vrImplementLength.DomainId;
@@ -115,9 +105,7 @@ namespace AgGateway.ADAPT.AcceptanceTest
                 var expectedImplementLength = expectedOffsets[implementLengthDomainId];
                 var actualImplementLength = implementConfiguration.ImplementLength;
 
-                Assert.AreEqual(expectedImplementLength.Item1, actualImplementLength.Value.Value);
-                Assert.AreEqual(expectedImplementLength.Item2, actualImplementLength.Value.UnitOfMeasure.Code);
-                Assert.AreEqual(implementLengthDomainId, actualImplementLength.Representation.Code);
+                AssertValue.VerifyNumericRepresentationValue(expectedImplementLength.Item1, expectedImplementLength.Item2, implementLengthDomainId, actualImplementLength);
             }
 
             var controlPointXOffsetDomainId = RepresentationInstanceList.vrInlineControlPointToConnectionOffset.DomainId;
@@ -126,9 +114,7 @@ namespace AgGateway.ADAPT.AcceptanceTest
                 var expectedXOffset = expectedOffsets[controlPointXOffsetDomainId];
                 var actualYOffset = implementConfiguration.ControlPoint.XOffset;
 
-                Assert.AreEqual(expectedXOffset.Item1, actualYOffset.Value.Value);
-                Assert.AreEqual(expectedXOffset.Item2, actualYOffset.Value.UnitOfMeasure.Code);
-                Assert.AreEqual(controlPointXOffsetDomainId, actualYOffset.Representation.Code);
+                AssertValue.VerifyNumericRepresentationValue(expectedXOffset.Item1, expectedXOffset.Item2, controlPointXOffsetDomainId, actualYOffset);
             }
 
             var controlPointYOffsetDomainId = RepresentationInstanceList.vrLateralControlPointToConnectionOffset.DomainId;
@@ -137,9 +123,7 @@ namespace AgGateway.ADAPT.AcceptanceTest
                 var expectedYOffset = expectedOffsets[controlPointYOffsetDomainId];
                 var acualYOffset = implementConfiguration.ControlPoint.YOffset;
 
-                Assert.AreEqual(expectedYOffset.Item1, acualYOffset.Value.Value);
-                Assert.AreEqual(expectedYOffset.Item2, acualYOffset.Value.UnitOfMeasure.Code);
-                Assert.AreEqual(controlPointYOffsetDomainId, acualYOffset.Representation.Code);
+                AssertValue.VerifyNumericRepresentationValue(expectedYOffset.Item1, expectedYOffset.Item2, controlPointYOffsetDomainId, acualYOffset);
             }
 
             var implementFrontOffsetDomainId = RepresentationInstanceList.vrImplementFrontOffset.DomainId;
@@ -148,9 +132,7 @@ namespace AgGateway.ADAPT.AcceptanceTest
                 var expectedFrontOffset = expectedOffsets[implementFrontOffsetDomainId];
                 var actualFrontOffset = implementConfiguration.Offsets.First(x=>x.Representation.Code == implementFrontOffsetDomainId);
 
-                Assert.AreEqual(expectedFrontOffset.Item1, actualFrontOffset.Value.Value);
-                Assert.AreEqual(expectedFrontOffset.Item2, actualFrontOffset.Value.UnitOfMeasure.Code);
-                Assert.AreEqual(implementFrontOffsetDomainId, actualFrontOffset.Representation.Code);
+                AssertValue.VerifyNumericRepresentationValue(expectedFrontOffset.Item1, expectedFrontOffset.Item2, implementFrontOffsetDomainId, actualFrontOffset);
             }
 
             var lateralConnectionPointToRecieverOffset = RepresentationInstanceList.vrLateralConnectionPointToReceiverOffset.DomainId;
@@ -159,9 +141,7 @@ namespace AgGateway.ADAPT.AcceptanceTest
                 var expectedOffset = expectedOffsets[lateralConnectionPointToRecieverOffset];
                 var actualOffset = implementConfiguration.Offsets.First(x => x.Representation.Code == lateralConnectionPointToRecieverOffset);
 
-                Assert.AreEqual(expectedOffset.Item1, actualOffset.Value.Value);
-                Assert.AreEqual(expectedOffset.Item2, actualOffset.Value.UnitOfMeasure.Code);
-                Assert.AreEqual(lateralConnectionPointToRecieverOffset, actualOffset.Representation.Code);
+                AssertValue.VerifyNumericRepresentationValue(expectedOffset.Item1, expectedOffset.Item2, lateralConnectionPointToRecieverOffset, actualOffset);
             }
 
             var inlineConnectionPointToRecieverOffset = RepresentationInstanceList.vrInlineConnectionPointToReceiverOffset.DomainId;
@@ -170,9 +150,7 @@ namespace AgGateway.ADAPT.AcceptanceTest
                 var expectedOffset = expectedOffsets[inlineConnectionPointToRecieverOffset];
                 var actualOffset = implementConfiguration.Offsets.First(x => x.Representation.Code == inlineConnectionPointToRecieverOffset);
 
-                Assert.AreEqual(expectedOffset.Item1, actualOffset.Value.Value);
-                Assert.AreEqual(expectedOffset.Item2, actualOffset.Value.UnitOfMeasure.Code);
-                Assert.AreEqual(inlineConnectionPointToRecieverOffset, actualOffset.Representation.Code);
+                AssertValue.VerifyNumericRepresentationValue(expectedOffset.Item1, expectedOffset.Item2, inlineConnectionPointToRecieverOffset, actualOffset);
             }
         }
 

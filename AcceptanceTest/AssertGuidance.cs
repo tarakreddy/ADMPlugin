@@ -56,9 +56,7 @@ namespace AgGateway.ADAPT.AcceptanceTest
             Assert.AreEqual(expectedEndPoint.Y, pivotGuidance.EndPoint.Y);
             Assert.AreEqual(expectedCenter.X, pivotGuidance.Center.X);
             Assert.AreEqual(expectedCenter.Y, pivotGuidance.Center.Y);
-            Assert.AreEqual(swathWidthValue, pivotGuidance.SwathWidth.Value.Value);
-            Assert.AreEqual(swathWidthUnitOfMeasure, pivotGuidance.SwathWidth.Value.UnitOfMeasure.Code);
-            Assert.AreEqual(RepresentationInstanceList.vrRadiusShift.DomainId, pivotGuidance.SwathWidth.Representation.Code);
+            AssertValue.VerifyNumericRepresentationValue(swathWidthValue, swathWidthUnitOfMeasure, RepresentationInstanceList.vrRadiusShift.DomainId, pivotGuidance.SwathWidth);
             Assert.AreEqual(expectedPropagationDirection, pivotGuidance.PropagationDirection);
             Assert.AreEqual(expectedExtension, pivotGuidance.Extension);
         }

@@ -42,20 +42,43 @@ namespace AgGateway.ADAPT.AcceptanceTest
 
         public static void VerifyCrop(List<Crop> catalogCrops, string expectedName, string expectedId, 
             double expectedCropWeight, string expectedCropWeightUnit, 
-            int expectedStandardPayableMoisture, string expectedStandardPayableMoistureUnit)
+            double expectedStandardPayableMoisture, string expectedStandardPayableMoistureUnit, string variableRepresentation = "vrCropWeightVolume")
         {
             var crop = catalogCrops.Find(x => x.Id.UniqueIds.First().Id == expectedId);
 
             Assert.IsNotNull(crop);
             Assert.AreEqual(expectedName, crop.Name);
 
-            Assert.AreEqual(expectedCropWeight, crop.ReferenceWeight.Value.Value);
-            Assert.AreEqual(expectedCropWeightUnit, crop.ReferenceWeight.Value.UnitOfMeasure.Code);
-            Assert.AreEqual(RepresentationInstanceList.vrCropWeightVolume.DomainId, crop.ReferenceWeight.Representation.Code);
+            AssertValue.VerifyNumericRepresentationValue(expectedCropWeight, expectedCropWeightUnit, variableRepresentation, crop.ReferenceWeight);
 
-            Assert.AreEqual(expectedStandardPayableMoisture, crop.StandardPayableMoisture.Value.Value);
-            Assert.AreEqual(expectedStandardPayableMoistureUnit, crop.StandardPayableMoisture.Value.UnitOfMeasure.Code);
-            Assert.AreEqual(RepresentationInstanceList.vrStandardPayableMoisture.DomainId, crop.StandardPayableMoisture.Representation.Code);
+            AssertValue.VerifyNumericRepresentationValue(expectedStandardPayableMoisture, expectedStandardPayableMoistureUnit,
+                RepresentationInstanceList.vrStandardPayableMoisture.DomainId, crop.StandardPayableMoisture);
+        }
+
+        public static void VerifyProductMix(List<Product> catalogProducts,
+            string expectedDescription, string expectedGuid, string expectedProductMixCarrierId,
+            string expectedCarrierDescription, double expectedProductMixSolutionRate, string expectedProductMixSolutionUnit,string expectedProductMixVariableRepresentation,
+            CategoryEnum expectedCategoryEnum, List<Tuple<string, double, string,string>> components)
+        {
+            var carrier = VerifyProduct(catalogProducts, expectedCarrierDescription, expectedProductMixCarrierId, CategoryEnum.Carrier,
+                typeof(Product));
+            Assert.IsNotNull(carrier);
+
+            var actualProduct = VerifyProduct(catalogProducts, expectedDescription, expectedGuid, expectedCategoryEnum, typeof(MixProduct));
+            var actualMixProduct = (MixProduct)actualProduct;
+
+            AssertValue.VerifyNumericRepresentationValue(expectedProductMixSolutionRate, expectedProductMixSolutionUnit, expectedProductMixVariableRepresentation, actualMixProduct.TotalQuantity);
+
+            foreach (var expectedComponent in components)
+            {
+                var actualIngredient = catalogProducts.Find(x => x.Description == expectedComponent.Item1);
+                Assert.IsNotNull(actualIngredient);
+
+                var actualProductComponent = actualMixProduct.ProductComponents.Find(x => x.IngredientId == actualIngredient.Id.ReferenceId);
+                AssertValue.VerifyNumericRepresentationValue(expectedComponent.Item2, expectedComponent.Item3,
+                    expectedComponent.Item4, actualProductComponent.Quantity);
+                    
+            }
         }
     }
 }

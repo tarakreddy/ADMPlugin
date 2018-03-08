@@ -39,9 +39,7 @@ namespace AgGateway.ADAPT.AcceptanceTest
             Assert.IsNotNull(field);
             Assert.AreEqual(expectedDescription, field.Description);
             Assert.AreEqual(farm.Id.ReferenceId, field.FarmId);
-            Assert.AreEqual(expectedArea, field.Area.Value.Value);
-            Assert.AreEqual(expectedAreaUnit, field.Area.Value.UnitOfMeasure.Code);
-            Assert.AreEqual(RepresentationInstanceList.vrReportedFieldArea.DomainId, field.Area.Representation.Code);
+            AssertValue.VerifyNumericRepresentationValue(expectedArea, expectedAreaUnit, RepresentationInstanceList.vrReportedFieldArea.DomainId, field.Area);
         }
 
         public static void VerifyPerson(List<Person> catalogPersons, string expectedName, string expectedGuid)
