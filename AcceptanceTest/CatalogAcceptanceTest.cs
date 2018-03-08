@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,7 +15,7 @@ using AgGateway.ADAPT.TestUtilities;
 namespace AgGateway.ADAPT.AcceptanceTest
 {
     [TestFixture]
-    public class PluginAcceptanceTest
+    public class CatalogAcceptanceTest
     {
         private string _cardPath;
         
